@@ -1,22 +1,38 @@
 import 'package:expenses/components/transaction_form.dart';
-import '../components/transaction_list.dart';
-import 'dart:math';
 import 'package:flutter/material.dart';
-
+import 'dart:math';
+import 'components/transaction_list.dart';
 import 'models/transaction.dart';
 
 main() => runApp(ExpensesApp());
 
 class ExpensesApp extends StatelessWidget {
+  ExpensesApp({super.key});
+  final ThemeData tema = ThemeData();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyHomePage(),
+      home: const MyHomePage(),
+      theme: ThemeData(
+        useMaterial3: false,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.purple,
+          foregroundColor: Colors.white,
+        ),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.amber,
+          primary: Colors.purple,
+          secondary: Colors.amber,
+        ),
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -25,47 +41,50 @@ class _MyHomePageState extends State<MyHomePage> {
   final _transactions = [
     Transaction(
       id: 't1',
-      title: 'New Shoes',
+      title: 'Novo Tênis de Corrida',
       value: 310.76,
       date: DateTime.now(),
     ),
     Transaction(
       id: 't2',
-      title: 'Groceries',
+      title: 'Conta de Luz',
       value: 211.30,
       date: DateTime.now(),
     ),
   ];
 
-  _addTransaction(String title, double Value) {
+  _addTransaction(String title, double value) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: title,
-      value: Value,
+      value: value,
       date: DateTime.now(),
     );
 
     setState(() {
       _transactions.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
   }
 
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return TransactionForm(_addTransaction);
-        });
+      context: context,
+      builder: (_) {
+        return TransactionForm(_addTransaction);
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Expenses'),
-        actions: <Widget>[
+        title: const Text('Despesas Pessoais'),
+        actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () => _openTransactionFormModal(context),
           ),
         ],
@@ -73,21 +92,20 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
+          children: [
+            const SizedBox(
               child: Card(
                 color: Colors.blue,
-                child: Text('Graph Placeholder'),
                 elevation: 5,
+                child: Text('Gráfico'),
               ),
             ),
-            TransactionList(transactions: _transactions),
+            TransactionList(transactions: _transactions,),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () => _openTransactionFormModal(context),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

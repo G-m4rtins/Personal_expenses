@@ -18,6 +18,7 @@ class _TransactionFormState extends State<TransactionForm> {
   _submitForm() {
     final title = titleController.text;
     final value = double.tryParse(valueController.text) ?? 0.0;
+
     widget.onSubmit(title, value);
 
     if(title.isEmpty || value <= 0){
