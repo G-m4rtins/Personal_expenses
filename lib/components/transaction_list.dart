@@ -45,10 +45,11 @@ TransactionList({
                     children: <Widget> [
                       Text(
                           tr.title,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          )
+                          style: Theme.of(context).textTheme.headline6 ,
+                          // style: TextStyle(
+                          //   fontSize: 20,
+                          //   fontWeight: FontWeight.bold,
+                          // )
                       ),
                       Text(
                           DateFormat('d MMM y').format(tr.date),
