@@ -14,7 +14,24 @@ TransactionList({
   Widget build(BuildContext context) {
     return Container(
       height: 450,
-      child: ListView(
+      child: transactions.isEmpty ? Column(
+        children: <Widget>[
+          Text(
+            'No transactions added yet!',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: 200,
+            child: Image.asset(
+              'assets/images/waiting.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+        ],
+      ) : ListView(
         children: transactions.map((tr) {
           return Card(
             child: Row (
